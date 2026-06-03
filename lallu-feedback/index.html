@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lallu De Parathe - Premium Feedback Form</title>
+
+<!-- Import Premium Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary: #ff6f00;
+    --primary-light: #ff9100;
+    --primary-dark: #d85c00;
+    --accent: #ffb703;
+    --bg-dark: #160a03;
+    --bg-gradient: linear-gradient(135deg, #1c0c02 0%, #2f1201 50%, #441700 100%);
+    --card-bg: rgba(255, 255, 255, 0.92);
+    --text-main: #2b170c;
+    --text-muted: #6e5e55;
+    --border-color: rgba(255, 111, 0, 0.15);
+    --star-active: #ffb703;
+    --star-inactive: #ddd2ca;
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+    --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 100px rgba(255, 111, 0, 0.05);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    color: var(--text-main);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background Atmosphere Glows */
+body::before, body::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 111, 0, 0.2) 0%, rgba(255, 111, 0, 0) 70%);
+    z-index: 0;
+    pointer-events: none;
+}
+body::before {
+    top: -50px;
+    left: -50px;
+}
+body::after {
+    bottom: -50px;
+    right: -50px;
+}
+
+.container {
+    width: 100%;
+    max-width: 680px;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-premium);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    z-index: 10;
+    position: relative;
+    transform: translateY(0);
+    transition: var(--transition);
+}
+
+.container:hover {
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 120px rgba(255, 111, 0, 0.08);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo-icon {
+    font-size: 3rem;
+    margin-bottom: 8px;
+    display: inline-block;
+    filter: drop-shadow(0 4px 8px rgba(255, 111, 0, 0.2));
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.logo h1 {
+    color: var(--primary);
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, var(--primary) 0%, #ff9100 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    font-weight: 400;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 580px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    letter-spacing: 0.2px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid rgba(221, 210, 202, 0.6);
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+    color: var(--text-main);
+    transition: var(--transition);
+}
+
+input:focus, textarea:focus {
+    border-color: var(--primary);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(255, 111, 0, 0.12);
+    outline: none;
+}
+
+textarea {
+    resize: none;
+}
+
+/* Custom Interactive Star Rating System */
+.rating-container {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border-color);
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    justify-content: space-between;
+}
+
+.rating-stars {
+    display: flex;
+    flex-direction: row-reverse; /* Allows simple sibling selector coloring */
+    gap: 8px;
+}
+
+.star-btn {
+    background: none;
+    border: none;
+    font-size: 2.2rem;
+    cursor: pointer;
+    color: var(--star-inactive);
+    transition: var(--transition);
+    padding: 0 2px;
+}
+
+/* Hover and active effects using sibling selector magic */
+.star-btn:hover,
+.star-btn:hover ~ .star-btn {
+    color: var(--accent);
+    transform: scale(1.2);
+}
+
+.rating-stars[data-value="1"] .star-btn[data-index="1"],
+.rating-stars[data-value="2"] .star-btn[data-index="1"],
+.rating-stars[data-value="2"] .star-btn[data-index="2"],
+.rating-stars[data-value="3"] .star-btn[data-index="1"],
+.rating-stars[data-value="3"] .star-btn[data-index="2"],
+.rating-stars[data-value="3"] .star-btn[data-index="3"],
+.rating-stars[data-value="4"] .star-btn[data-index="1"],
+.rating-stars[data-value="4"] .star-btn[data-index="2"],
+.rating-stars[data-value="4"] .star-btn[data-index="3"],
+.rating-stars[data-value="4"] .star-btn[data-index="4"],
+.rating-stars[data-value="5"] .star-btn {
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
+}
+
+.rating-label-display {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 70px;
+    text-align: right;
+}
+
+/* Custom Emoji Selector */
+.emoji-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.emoji-card {
+    background: rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(221, 210, 202, 0.5);
+    border-radius: var(--radius-md);
+    padding: 16px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.emoji-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-light);
+    box-shadow: 0 8px 16px rgba(255, 111, 0, 0.08);
+}
+
+.emoji-card.selected {
+    background: rgba(255, 111, 0, 0.06);
+    border-color: var(--primary);
+    box-shadow: 0 10px 20px rgba(255, 111, 0, 0.12);
+    transform: translateY(-4px) scale(1.03);
+}
+
+.emoji-card .emoji {
+    font-size: 2rem;
+    margin-bottom: 6px;
+    transition: var(--transition);
+}
+
+.emoji-card.selected .emoji {
+    transform: scale(1.2);
+}
+
+.emoji-card .label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.emoji-card.selected .label {
+    color: var(--primary);
+}
+
+/* Submit Button styling */
+.btn-submit {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 111, 0, 0.3);
+    transition: var(--transition);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    box-shadow: 0 12px 30px rgba(255, 111, 0, 0.45);
+    transform: translateY(-2px);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* Loading Spinner */
+.spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Floating Settings Button */
+.settings-trigger {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: var(--transition);
+    color: var(--primary);
+}
+
+.settings-trigger:hover {
+    transform: rotate(45deg) scale(1.1);
+    background: white;
+    color: var(--primary-dark);
+}
+
+.settings-trigger svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Floating Admin Button */
+.admin-trigger {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: var(--transition);
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.admin-trigger:hover {
+    transform: scale(1.1);
+    background: white;
+    color: var(--primary-dark);
+}
+
+.admin-trigger svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Settings Modal */
+.settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(22, 10, 3, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.settings-content {
+    background: white;
+    padding: 35px;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    animation: modalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalIn {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.settings-content h2 {
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.settings-content p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.settings-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.settings-close:hover {
+    color: var(--text-main);
+}
+
+.settings-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.btn-secondary {
+    background: #eaeaea;
+    color: var(--text-main);
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background: #dcdcdc;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+/* Setup Alert Banner */
+.setup-banner {
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setup-banner button {
+    background: #856404;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.setup-banner button:hover {
+    background: #6b5003;
+}
+
+/* Beautiful Animated Success Overlay Modal */
+.success-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(22, 10, 3, 0.45);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    padding: 20px;
+}
+
+.success-card {
+    background: white;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    max-width: 450px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    animation: successPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes successPop {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.success-icon {
+    font-size: 4.5rem;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: successBounce 1s infinite alternate;
+}
+
+@keyframes successBounce {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-10px) scale(1.05); }
+}
+
+.success-card h2 {
+    color: #2a9d8f;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.success-card p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.success-card button {
+    background: #2a9d8f;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+    box-shadow: 0 8px 20px rgba(42, 157, 143, 0.3);
+}
+
+.success-card button:hover {
+    background: #218376;
+    box-shadow: 0 10px 25px rgba(42, 157, 143, 0.45);
+}
+
+/* Helper to hide native inputs but retain HTML validation support */
+.hidden-validation-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+    pointer-events: none;
+}
+</style>
+
+<!-- Supabase JS Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<!-- Setup Alert Banner (shown if key is missing) -->
+<div id="setupBanner" class="setup-banner" style="display: none; position: fixed; top: 20px; z-index: 1000; width: calc(100% - 40px); max-width: 680px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+    <span>⚠️ <strong>Supabase Connection Needed:</strong> Please set your Anon Public Key to activate the form.</span>
+    <button onclick="openSettings()">Configure Now</button>
+</div>
+
+<div class="container">
+
+    <div class="logo">
+        <span class="logo-icon">🍽️</span>
+        <h1>Lallu De Parathe</h1>
+        <p>Your feedback helps us serve you better!</p>
+    </div>
+
+    <form id="feedbackForm">
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="customer_name">Customer Name</label>
+                <input id="customer_name" type="text" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input id="mobile" type="tel" placeholder="Enter mobile number" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Food Quality Rating</label>
+            <div class="rating-container">
+                <div class="rating-stars" id="stars_food_rating" data-rating-id="food_rating" data-value="0">
+                    <button type="button" class="star-btn" data-index="5" data-value="5">★</button>
+                    <button type="button" class="star-btn" data-index="4" data-value="4">★</button>
+                    <button type="button" class="star-btn" data-index="3" data-value="3">★</button>
+                    <button type="button" class="star-btn" data-index="2" data-value="2">★</button>
+                    <button type="button" class="star-btn" data-index="1" data-value="1">★</button>
+                </div>
+                <div class="rating-label-display" id="label_food_rating">- / 5</div>
+            </div>
+            <input type="text" id="food_rating" class="hidden-validation-input" required>
+        </div>
+
+        <div class="form-group">
+            <label>Service Rating</label>
+            <div class="rating-container">
+                <div class="rating-stars" id="stars_service_rating" data-rating-id="service_rating" data-value="0">
+                    <button type="button" class="star-btn" data-index="5" data-value="5">★</button>
+                    <button type="button" class="star-btn" data-index="4" data-value="4">★</button>
+                    <button type="button" class="star-btn" data-index="3" data-value="3">★</button>
+                    <button type="button" class="star-btn" data-index="2" data-value="2">★</button>
+                    <button type="button" class="star-btn" data-index="1" data-value="1">★</button>
+                </div>
+                <div class="rating-label-display" id="label_service_rating">- / 5</div>
+            </div>
+            <input type="text" id="service_rating" class="hidden-validation-input" required>
+        </div>
+
+        <div class="form-group">
+            <label>Cleanliness Rating</label>
+            <div class="rating-container">
+                <div class="rating-stars" id="stars_cleanliness_rating" data-rating-id="cleanliness_rating" data-value="0">
+                    <button type="button" class="star-btn" data-index="5" data-value="5">★</button>
+                    <button type="button" class="star-btn" data-index="4" data-value="4">★</button>
+                    <button type="button" class="star-btn" data-index="3" data-value="3">★</button>
+                    <button type="button" class="star-btn" data-index="2" data-value="2">★</button>
+                    <button type="button" class="star-btn" data-index="1" data-value="1">★</button>
+                </div>
+                <div class="rating-label-display" id="label_cleanliness_rating">- / 5</div>
+            </div>
+            <input type="text" id="cleanliness_rating" class="hidden-validation-input" required>
+        </div>
+
+        <div class="form-group">
+            <label>Overall Experience</label>
+            <div class="emoji-selector" id="experience_selector">
+                <div class="emoji-card" data-value="Poor 😔">
+                    <div class="emoji">😔</div>
+                    <div class="label">Poor</div>
+                </div>
+                <div class="emoji-card" data-value="Average 😐">
+                    <div class="emoji">😐</div>
+                    <div class="label">Average</div>
+                </div>
+                <div class="emoji-card" data-value="Good 😊">
+                    <div class="emoji">😊</div>
+                    <div class="label">Good</div>
+                </div>
+                <div class="emoji-card" data-value="Excellent 😍">
+                    <div class="emoji">😍</div>
+                    <div class="label">Excellent</div>
+                </div>
+            </div>
+            <input type="text" id="overall_experience" class="hidden-validation-input" required>
+        </div>
+
+        <div class="form-group">
+            <label for="comments">Suggestions / Comments</label>
+            <textarea id="comments" rows="4" placeholder="Tell us how we can improve your culinary experience..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btnSubmit">
+            <span>Submit Feedback</span>
+            <div class="spinner" id="btnSpinner"></div>
+        </button>
+
+    </form>
+</div>
+
+
+
+<!-- Settings Modal Box -->
+<div id="settingsModal" class="settings-modal">
+    <div class="settings-content">
+        <button class="settings-close" onclick="closeSettings()">&times;</button>
+        <h2>Connection Settings</h2>
+        <p>Fill in your Supabase project details to save submissions directly to your database table.</p>
+        
+        <div class="form-group">
+            <label for="set_supabase_url">Supabase URL</label>
+            <input type="url" id="set_supabase_url" placeholder="https://your-project.supabase.co">
+        </div>
+
+        <div class="form-group">
+            <label for="set_supabase_key">Supabase Anon Public Key</label>
+            <input type="password" id="set_supabase_key" placeholder="Paste your anon public key here">
+        </div>
+
+        <div class="settings-footer">
+            <button class="btn-secondary" onclick="closeSettings()">Cancel</button>
+            <button class="btn-primary" onclick="saveSettings()">Save & Connect</button>
+        </div>
+    </div>
+</div>
+
+<!-- Success Overlay Modal -->
+<div id="successOverlay" class="success-overlay">
+    <div class="success-card">
+        <span class="success-icon">🎉</span>
+        <h2>Feedback Submitted!</h2>
+        <p>Thank you for your valuable feedback. It has been successfully saved to our database system!</p>
+        <button onclick="closeSuccessOverlay()">Done</button>
+    </div>
+</div>
+
+<script>
+// Supabase Configuration Management
+const DEFAULT_URL = "https://ogtbnapgwikhnfhxlhuc.supabase.co";
+const DEFAULT_KEY = "sb_publishable_XSwOF7YnCpf2iFw1SAAsFA_TjbljZXQ";
+
+let dbClient = null;
+
+// Initialize Supabase Client
+function initSupabase() {
+    const url = localStorage.getItem("supabase_url") || DEFAULT_URL;
+    const key = localStorage.getItem("supabase_key") || DEFAULT_KEY;
+
+    document.getElementById("set_supabase_url").value = url;
+    document.getElementById("set_supabase_key").value = key;
+
+    if (url && key) {
+        try {
+            dbClient = supabase.createClient(url, key);
+            document.getElementById("setupBanner").style.display = "none";
+            console.log("Supabase Client initialized successfully!");
+        } catch (e) {
+            console.error("Failed to initialize Supabase:", e);
+        }
+    } else {
+        document.getElementById("setupBanner").style.display = "flex";
+    }
+}
+
+// Open settings popup
+function openSettings() {
+    document.getElementById("settingsModal").style.display = "flex";
+}
+
+// Close settings popup
+function closeSettings() {
+    document.getElementById("settingsModal").style.display = "none";
+}
+
+// Save settings to LocalStorage
+function saveSettings() {
+    const url = document.getElementById("set_supabase_url").value.trim();
+    const key = document.getElementById("set_supabase_key").value.trim();
+
+    if (!url) {
+        alert("Please enter a valid Supabase URL.");
+        return;
+    }
+    if (!key) {
+        alert("Please enter a valid Supabase Anon Public Key.");
+        return;
+    }
+
+    localStorage.setItem("supabase_url", url);
+    localStorage.setItem("supabase_key", key);
+
+    initSupabase();
+    closeSettings();
+    alert("Connection settings saved successfully!");
+}
+
+// Close Success Modal
+function closeSuccessOverlay() {
+    document.getElementById("successOverlay").style.display = "none";
+}
+
+// Bind custom star rating interfaces
+document.querySelectorAll(".rating-stars").forEach(starContainer => {
+    const ratingId = starContainer.getAttribute("data-rating-id");
+    const inputField = document.getElementById(ratingId);
+    const labelDisplay = document.getElementById(`label_${ratingId}`);
+    
+    starContainer.querySelectorAll(".star-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const value = btn.getAttribute("data-value");
+            starContainer.setAttribute("data-value", value);
+            inputField.value = value;
+            labelDisplay.textContent = `⭐ ${value} / 5`;
+            
+            // Add subtle click bounce effect
+            btn.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1.2)';
+                setTimeout(() => btn.style.transform = '', 150);
+            }, 100);
+        });
+    });
+});
+
+// Bind Custom Emoji Cards
+const emojiCards = document.querySelectorAll(".emoji-card");
+const experienceInput = document.getElementById("overall_experience");
+
+emojiCards.forEach(card => {
+    card.addEventListener("click", () => {
+        emojiCards.forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        experienceInput.value = card.getAttribute("data-value");
+    });
+});
+
+// Reset visual elements along with the standard form reset
+function resetFormVisuals() {
+    document.querySelectorAll(".rating-stars").forEach(container => {
+        container.setAttribute("data-value", "0");
+        const ratingId = container.getAttribute("data-rating-id");
+        document.getElementById(`label_${ratingId}`).textContent = "- / 5";
+    });
+    emojiCards.forEach(card => card.classList.remove("selected"));
+}
+
+// Form Submission handling
+document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    if (!dbClient) {
+        alert("Please configure your Supabase Anon Public Key first by clicking the gear icon at the bottom of the screen!");
+        openSettings();
+        return;
+    }
+
+    // Capture standard values
+    const payload = {
+        customer_name: document.getElementById("customer_name").value.trim(),
+        mobile: document.getElementById("mobile").value.trim(),
+        food_rating: document.getElementById("food_rating").value,
+        service_rating: document.getElementById("service_rating").value,
+        cleanliness_rating: document.getElementById("cleanliness_rating").value,
+        overall_experience: document.getElementById("overall_experience").value,
+        comments: document.getElementById("comments").value.trim()
+    };
+
+    // Show loading spinner
+    const btnSubmit = document.getElementById("btnSubmit");
+    const btnSpinner = document.getElementById("btnSpinner");
+    btnSubmit.disabled = true;
+    btnSpinner.style.display = "block";
+
+    try {
+        const { error } = await dbClient
+            .from("feedback")
+            .insert([payload]);
+
+        if (error) {
+            throw error;
+        }
+
+        // Show beautiful custom success overlay modal
+        document.getElementById("successOverlay").style.display = "flex";
+        
+        // Reset the form
+        this.reset();
+        resetFormVisuals();
+
+    } catch (error) {
+        alert("Error saving feedback: " + error.message);
+        console.error(error);
+    } finally {
+        // Hide loading spinner
+        btnSubmit.disabled = false;
+        btnSpinner.style.display = "none";
+    }
+});
+
+// Initialize on page load
+window.addEventListener("DOMContentLoaded", initSupabase);
+</script>
+
+</body>
+</html>
